@@ -2,12 +2,13 @@ package com.minerwars.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.awt.Rectangle;
 
 public class MinerWars extends ApplicationAdapter {
 
@@ -16,8 +17,7 @@ public class MinerWars extends ApplicationAdapter {
 	private Texture backgroundImage;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Rectangle player;
-	private Rectangle enemy;
+	private Sprite player;
 	
 	@Override
 	public void create () {
@@ -25,12 +25,11 @@ public class MinerWars extends ApplicationAdapter {
 		enemyImage = new Texture(Gdx.files.internal("Enemy/chicken.png"));
 		backgroundImage = new Texture(Gdx.files.internal("Background/background.png"));
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false,800,480);
+		camera.setToOrtho(false, 1920, 1080);
 		batch = new SpriteBatch();
-		player = new Rectangle();
-		enemy = new Rectangle();
+		player = new Sprite(playerImage);
+		player.scale((float) -0.2);
 		initPlayer(player);
-		initEnemy(enemy);
 	}
 
 	@Override
@@ -40,23 +39,30 @@ public class MinerWars extends ApplicationAdapter {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(playerImage, player.x, player.y);
-		batch.draw(enemyImage, enemy.x, enemy.y);
+		player.draw(batch);
 		batch.end();
+		checkMovement();
 	}
 
-	public void initPlayer(Rectangle character){
-		character.x = 100;
-		character.y = 20;
-		character.width = 64;
-		character.height = 64;
+
+	public void initPlayer(Sprite player){
+		player.setX(100);
+		player.setY(20);
 	}
 
-	public void initEnemy(Rectangle character){
-		character.x = 700;
-		character.y = 20;
-		character.width = 64;
-		character.height = 64;
+	public void checkMovement(){
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			player.setX(player.getX()+ 20);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+			player.setX(player.getX()- 20);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+			player.setY(player.getY() + 20);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+			player.setY(player.getY() - 20);
+		}
 	}
 
 }
