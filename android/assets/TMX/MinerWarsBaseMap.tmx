@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="../Tilesets/TileSheets.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Background" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzzZ2Bg8KcA7wDinRSaMWr/qP2j9pNv90Dbf3IA7R/I8D8xDOIf2QxKMCVheJJIjJze0DE9w3sg4nrU/lH7h3pZQ8hcYjC18zop5c9A1XOjeBSP4lFMCwwAHN1pYA==
+  </data>
+ </layer>
+ <layer name="Enviroment" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzdlsENAjEQA6//P1ABUAFQAVABXAVABcAX84tWcjhvsitgJEtRHj7J6+QyDDozaA4tzP4eOkBHh6fCElpBa7N/gs7QGPz9DbSFdmb/Al2hm8NTyY7lf4ce0NPxfSU7ln8LSnYs/xY+Zdez2x6vnt32eLV0u+ZVdpmt36jdrmVcepVdZmsPUzMuu8zWHnrOy0PLXZTJ1P5FEdU/hj0XUf1jZP2jGfZcZM/fnovs+Vsi5p/1DmR8W8dqRPRPuXv/sX8ZRHRc8YzouOIZ8b5QPCPeF7/yZunJC/9hr10=
+  </data>
+ </layer>
+</map>
