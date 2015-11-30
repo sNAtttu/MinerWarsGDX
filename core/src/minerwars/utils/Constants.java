@@ -6,4 +6,5 @@ public class Constants {
     public static float PLAYERSPEED = 5;
     public static int TILEWIDTH = 32;
     public static int TILEHEIGHT = 32;
+
 }

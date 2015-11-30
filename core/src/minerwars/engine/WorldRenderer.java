@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import minerwars.models.Player;
 import minerwars.models.Enemy;
 import minerwars.models.Tile;
+import minerwars.utils.Animator;
 import minerwars.utils.AssetLoader;
 import minerwars.utils.Constants;
 import minerwars.utils.InputHandler;
@@ -27,6 +29,8 @@ import minerwars.utils.InputHandler;
 public class WorldRenderer {
 
     private GameWorld myWorld;
+    private Animator animator;
+    private Animation idleAnimation;
     private OrthographicCamera cam;
     private SpriteBatch batch;
     private TiledMap tiledMap;
@@ -35,8 +39,12 @@ public class WorldRenderer {
     private Sprite player;
     private Sprite enemy;
     private Player playerClass;
+    private TextureRegion playerIdleCurrentFrame;
+    private float stateTime;
 
     public WorldRenderer(GameWorld world){
+        animator = new Animator();
+        idleAnimation = animator.getIdleAnimation();
         myWorld = world;
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 600);
@@ -49,17 +57,20 @@ public class WorldRenderer {
         cam.position.x = player.getX();
         cam.position.y = player.getY();
         cam.update();
+        stateTime = 0f;
     }
 
     public void render(){
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stateTime += Gdx.graphics.getDeltaTime();
+        playerIdleCurrentFrame = idleAnimation.getKeyFrame(stateTime,true);
         tiledMapRenderer.setView(cam);
         tiledMapRenderer.render();
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        player.draw(batch);
+        batch.draw(playerIdleCurrentFrame,player.getX(),player.getY(),player.getWidth()+50,player.getHeight()+40);
         batch.end();
         checkInput();
     }
@@ -94,7 +105,7 @@ public class WorldRenderer {
     }
 
     private void initGameObjects(){
-        playerClass = new Player("Santoro", 100, 20);
+        playerClass = new Player("Santoro", 50, 50);
         Enemy enemyClass = new Enemy(800,20);
         enemy = enemyClass.initEnemy();
         player = playerClass.initPlayer();
