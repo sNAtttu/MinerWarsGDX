@@ -20,20 +20,15 @@ public class Player {
     private int positionX;
     private int positionY;
 
-    public Player(String name,MapProperties prop) {
-        int mapWidth = prop.get("width", Integer.class);
-        int mapHeight = prop.get("height", Integer.class);
-        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-        int tilePixelHeight = prop.get("tileheight", Integer.class);
-        int mapPixelWidth = mapWidth * tilePixelWidth;
-        int mapPixelHeight = mapHeight * tilePixelHeight;
+    public Player(String name, GameWorld world) {
+
         this.name = name;
         this.playerImage = new Texture(Gdx.files.internal("Player/playerStill.png"));
         this.playerSprite = new Sprite(this.playerImage);
-        this.setPositionX(mapPixelWidth / 2);
-        this.setPositionY(mapPixelHeight / 2);
-        this.playerSprite.setX(mapPixelWidth / 2);
-        this.playerSprite.setY(mapPixelHeight / 2);
+        this.setPositionX(world.getWorldWidth() / 2);
+        this.setPositionY(world.getWorldHeight() / 2);
+        this.playerSprite.setX(world.getWorldWidth() / 2);
+        this.playerSprite.setY(world.getWorldHeight() / 2);
     }
     public int getPositionX() {
         return positionX;
