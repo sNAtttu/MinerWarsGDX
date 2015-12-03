@@ -1,5 +1,7 @@
 package minerwars.utils;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,13 +12,8 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class InputHandler implements InputProcessor {
 
-    private OrthographicCamera camera;
-    private Sprite player;
-
-    public InputHandler(OrthographicCamera camera, Sprite player)
+    public InputHandler()
     {
-        this.camera = camera;
-        this.player = player;
     }
     @Override
     public boolean keyDown(int keycode) {
@@ -56,5 +53,35 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public static void checkInput(Sprite player, OrthographicCamera camera){
+        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+            player.setX(player.getX()+ Constants.PLAYERSPEED);
+            camera.position.x = player.getX();
+            camera.position.y = player.getY();
+            camera.update();
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+            player.setX(player.getX() - Constants.PLAYERSPEED);
+            camera.position.x = player.getX();
+            camera.position.y = player.getY();
+            camera.update();
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+            player.setY(player.getY() + Constants.PLAYERSPEED);
+            camera.position.x = player.getX();
+            camera.position.y = player.getY();
+            camera.update();
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+            player.setY(player.getY() - Constants.PLAYERSPEED);
+            camera.position.x = player.getX();
+            camera.position.y = player.getY();
+            camera.update();
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+            Gdx.app.exit();
+        }
     }
 }

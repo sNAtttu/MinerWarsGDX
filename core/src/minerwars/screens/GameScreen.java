@@ -14,7 +14,6 @@ public class GameScreen implements Screen {
 
     private GameWorld world;
     private WorldRenderer renderer;
-    private float runTime;
 
     public GameScreen(){
         Gdx.app.log("GameScreen", "Attached");
@@ -29,8 +28,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        runTime += delta;
-        world.update(delta);
         renderer.render();
     }
 
