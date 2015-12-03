@@ -22,16 +22,16 @@ public class GameWorld {
     private int worldHeight;
 
     public GameWorld(){
+        currentState = Enumerables.GameState.RUNNING;
+        this.tiledMap = new TmxMapLoader().load("TMX/MinerWarsBaseMap.tmx");
+        this.tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        mapProperties = tiledMap.getProperties();
         this.mapWidth = mapProperties.get("width", Integer.class);
         this.mapHeight = mapProperties.get("height", Integer.class);
         this.tilePixelWidth = mapProperties.get("tilewidth", Integer.class);
         this.tilePixelHeight = mapProperties.get("tileheight", Integer.class);
         this.worldWidth = mapWidth * tilePixelWidth;
         this.worldHeight = mapHeight * tilePixelHeight;
-        currentState = Enumerables.GameState.RUNNING;
-        this.tiledMap = new TmxMapLoader().load("TMX/MinerWarsBaseMap.tmx");
-        this.tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        mapProperties = tiledMap.getProperties();
     }
     public MapProperties getMapProperties() {
         return mapProperties;

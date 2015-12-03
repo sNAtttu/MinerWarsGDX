@@ -2,6 +2,7 @@ package minerwars.engine;
 
 import minerwars.models.Player;
 import minerwars.utils.Animator;
+import minerwars.utils.Enumerables;
 import minerwars.utils.InputHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -29,10 +30,10 @@ public class WorldRenderer {
         myWorld = world;
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 600);
-        playerClass = new Player("Santoro", myWorld.getMapProperties());
+        playerClass = new Player("Santoro", myWorld);
         batch = new SpriteBatch();
         batch.setProjectionMatrix(cam.combined);
-        Gdx.input.setInputProcessor(new InputHandler());
+        Gdx.input.setInputProcessor(new InputHandler(playerClass));
         cam.position.x = playerClass.getPlayerSprite().getX();
         cam.position.y = playerClass.getPlayerSprite().getY();
         cam.update();
@@ -49,12 +50,22 @@ public class WorldRenderer {
         myWorld.getTiledMapRenderer().render();
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(playerIdleCurrentFrame,
-                playerClass.getPlayerSprite().getX(),
-                playerClass.getPlayerSprite().getY(),
-                playerClass.getPlayerSprite().getWidth(),
-                playerClass.getPlayerSprite().getHeight());
+        if(playerClass.getPlayerState() == Enumerables.PlayerState.RUNNING){
+            batch.draw(playerRunningCurrentFrame,
+                    playerClass.getPlayerSprite().getX(),
+                    playerClass.getPlayerSprite().getY(),
+                    playerClass.getPlayerSprite().getWidth(),
+                    playerClass.getPlayerSprite().getHeight());
+        }
+        else{
+            batch.draw(playerIdleCurrentFrame,
+                    playerClass.getPlayerSprite().getX(),
+                    playerClass.getPlayerSprite().getY(),
+                    playerClass.getPlayerSprite().getWidth(),
+                    playerClass.getPlayerSprite().getHeight());
+        }
         batch.end();
-        InputHandler.checkInput(playerClass.getPlayerSprite(),cam);
+        InputHandler.checkInput(playerClass, cam);
+
     }
 }

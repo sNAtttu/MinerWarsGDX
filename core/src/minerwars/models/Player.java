@@ -21,7 +21,7 @@ public class Player {
     private int positionY;
 
     public Player(String name, GameWorld world) {
-
+        this.playerState = Enumerables.PlayerState.IDLE;
         this.name = name;
         this.playerImage = new Texture(Gdx.files.internal("Player/playerStill.png"));
         this.playerSprite = new Sprite(this.playerImage);
