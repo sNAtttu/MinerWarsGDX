@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+
 /**
  * Created by Sane on 11/29/2015.
  */
@@ -33,7 +35,7 @@ public class WorldRenderer {
         playerClass = new Player("Santoro", myWorld);
         batch = new SpriteBatch();
         batch.setProjectionMatrix(cam.combined);
-        Gdx.input.setInputProcessor(new InputHandler(playerClass));
+        Gdx.input.setInputProcessor(new InputHandler(playerClass, cam, myWorld));
         cam.position.x = playerClass.getPlayerSprite().getX();
         cam.position.y = playerClass.getPlayerSprite().getY();
         cam.update();
@@ -51,7 +53,7 @@ public class WorldRenderer {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         if(playerClass.getPlayerState() == Enumerables.PlayerState.RUNNING){
-            batch.draw(playerRunningCurrentFrame,
+            batch.draw(playerIdleCurrentFrame,
                     playerClass.getPlayerSprite().getX(),
                     playerClass.getPlayerSprite().getY(),
                     playerClass.getPlayerSprite().getWidth(),
@@ -65,7 +67,7 @@ public class WorldRenderer {
                     playerClass.getPlayerSprite().getHeight());
         }
         batch.end();
-        InputHandler.checkInput(playerClass, cam);
+        InputHandler.checkInput(playerClass, cam, myWorld);
 
     }
 }
