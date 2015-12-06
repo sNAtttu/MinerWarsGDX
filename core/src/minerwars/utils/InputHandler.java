@@ -64,14 +64,10 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
-    public static void checkInput(Player playerClass, MyCamera camera, GameWorld myWorld){
+    public static void checkInput(Player playerClass, MyCamera camera){
 
         Sprite player = playerClass.getPlayerSprite();
 
-        camera.position.x = player.getX();
-        camera.position.y = player.getY();
-
-        camera.update();
         if(Gdx.input.isKeyPressed(Input.Keys.D)) {
             playerClass.setPlayerState(Enumerables.PlayerState.RUNNING);
             player.setX(player.getX() + Constants.PLAYERSPEED);
@@ -91,6 +87,8 @@ public class InputHandler implements InputProcessor {
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
             Gdx.app.exit();
         }
+        camera.position.x = player.getX();
+        camera.position.y = player.getY();
         camera.update();
     }
 

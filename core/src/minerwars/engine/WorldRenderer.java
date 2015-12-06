@@ -40,7 +40,6 @@ public class WorldRenderer {
         Gdx.input.setInputProcessor(new InputHandler(playerClass, cam, myWorld));
         cam.position.x = playerClass.getPlayerSprite().getX();
         cam.position.y = playerClass.getPlayerSprite().getY();
-        cam.update();
         stateTime = 0f;
     }
 
@@ -54,6 +53,7 @@ public class WorldRenderer {
         myWorld.getTiledMapRenderer().render();
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
+
         if(playerClass.getPlayerState() == Enumerables.PlayerState.RUNNING){
             batch.draw(playerIdleCurrentFrame,
                     playerClass.getPlayerSprite().getX(),
@@ -69,7 +69,7 @@ public class WorldRenderer {
                     playerClass.getPlayerSprite().getHeight());
         }
         batch.end();
-        InputHandler.checkInput(playerClass, cam, myWorld);
+        InputHandler.checkInput(playerClass, cam);
 
     }
 }
