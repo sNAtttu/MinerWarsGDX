@@ -4,6 +4,8 @@ import minerwars.models.Player;
 import minerwars.utils.Animator;
 import minerwars.utils.Enumerables;
 import minerwars.utils.InputHandler;
+import minerwars.utils.MyCamera;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,7 +22,7 @@ public class WorldRenderer {
     private GameWorld myWorld;
     private Animator animator;
     private Animation idleAnimation;
-    private OrthographicCamera cam;
+    private MyCamera cam;
     private SpriteBatch batch;
     private Player playerClass;
     private TextureRegion playerIdleCurrentFrame;
@@ -30,9 +32,9 @@ public class WorldRenderer {
         animator = new Animator();
         idleAnimation = animator.getIdleAnimation();
         myWorld = world;
-        cam = new OrthographicCamera();
-        cam.setToOrtho(false, 800, 600);
         playerClass = new Player("Santoro", myWorld);
+        cam = new MyCamera(playerClass, myWorld);
+        cam.setToOrtho(false, 800, 600);
         batch = new SpriteBatch();
         batch.setProjectionMatrix(cam.combined);
         Gdx.input.setInputProcessor(new InputHandler(playerClass, cam, myWorld));
