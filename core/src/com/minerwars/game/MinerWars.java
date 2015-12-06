@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import minerwars.models.Enemy;
 import minerwars.models.Player;
 import minerwars.screens.GameScreen;
+import minerwars.screens.StartScreen;
 import minerwars.utils.AssetLoader;
 import minerwars.utils.Constants;
 
@@ -23,7 +24,12 @@ public class MinerWars extends Game {
 	public void create () {
 		Gdx.app.log("MinerWars", "Created!");
 		AssetLoader.load();
-		setScreen(new GameScreen());
+		setScreen(new StartScreen(this));
+	}
+
+	@Override
+	public void render(){
+		super.render();
 	}
 
 	@Override

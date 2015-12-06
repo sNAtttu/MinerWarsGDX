@@ -2,6 +2,7 @@ package minerwars.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 
 import minerwars.engine.GameWorld;
 import minerwars.engine.WorldRenderer;
@@ -14,11 +15,15 @@ public class GameScreen implements Screen {
 
     private GameWorld world;
     private WorldRenderer renderer;
+    private Sound backgroundMusic;
 
     public GameScreen(){
         Gdx.app.log("GameScreen", "Attached");
+        backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("Audio/GameBackground.wav"));
+        backgroundMusic.play();
         world = new GameWorld();
         renderer = new WorldRenderer(world);
+
     }
 
     @Override
