@@ -22,15 +22,18 @@ public class WorldRenderer {
     private GameWorld myWorld;
     private Animator animator;
     private Animation idleAnimation;
+    private Animation runningAnimation;
     private MyCamera cam;
     private SpriteBatch batch;
     private Player playerClass;
     private TextureRegion playerIdleCurrentFrame;
+    private TextureRegion playerRunningCurrentFrame;
     private float stateTime;
 
     public WorldRenderer(GameWorld world){
         animator = new Animator();
         idleAnimation = animator.getIdleAnimation();
+        runningAnimation = animator.getRunningAnimation();
         myWorld = world;
         playerClass = new Player("Santoro", myWorld);
         cam = new MyCamera(playerClass, myWorld);
@@ -49,25 +52,30 @@ public class WorldRenderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stateTime += Gdx.graphics.getDeltaTime();
         playerIdleCurrentFrame = idleAnimation.getKeyFrame(stateTime, true);
+        playerRunningCurrentFrame = runningAnimation.getKeyFrame(stateTime, true);
         myWorld.getTiledMapRenderer().setView(cam);
         myWorld.getTiledMapRenderer().render();
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
 
         if(playerClass.getPlayerState() == Enumerables.PlayerState.RUNNING){
+            batch.draw(playerRunningCurrentFrame,
+                    playerClass.getPlayerSprite().getX(),
+                    playerClass.getPlayerSprite().getY(),
+                    playerClass.getPlayerSprite().getWidth(),
+                    playerClass.getPlayerSprite().getHeight());
+        }
+        else if (playerClass.getPlayerState() == Enumerables.PlayerState.IDLE){
             batch.draw(playerIdleCurrentFrame,
                     playerClass.getPlayerSprite().getX(),
                     playerClass.getPlayerSprite().getY(),
                     playerClass.getPlayerSprite().getWidth(),
                     playerClass.getPlayerSprite().getHeight());
         }
-        else{
-            batch.draw(playerIdleCurrentFrame,
-                    playerClass.getPlayerSprite().getX(),
-                    playerClass.getPlayerSprite().getY(),
-                    playerClass.getPlayerSprite().getWidth(),
-                    playerClass.getPlayerSprite().getHeight());
+        else {
+            Gdx.app.log("RENDER","PLAYER HAS NOT STATE");
         }
+
         batch.end();
         InputHandler.checkInput(playerClass, cam);
 
