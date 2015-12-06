@@ -10,4 +10,7 @@ public class Enumerables {
     public enum PlayerState{
         IDLE,RUNNING
     }
+    public enum PlayerDirection{
+        RIGHT,LEFT,UP,DOWN
+    }
 }

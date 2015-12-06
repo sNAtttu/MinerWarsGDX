@@ -14,6 +14,7 @@ import minerwars.utils.Enumerables;
 public class Player {
 
     public Enumerables.PlayerState playerState;
+    public Enumerables.PlayerDirection playerDirection;
     private Texture playerImage;
     private String name;
     private Sprite playerSprite;
@@ -22,6 +23,7 @@ public class Player {
 
     public Player(String name, GameWorld world) {
         this.playerState = Enumerables.PlayerState.IDLE;
+        this.playerDirection = Enumerables.PlayerDirection.RIGHT;
         this.name = name;
         this.playerImage = new Texture(Gdx.files.internal("Player/playerStill.png"));
         this.playerSprite = new Sprite(this.playerImage);
@@ -64,6 +66,13 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public Enumerables.PlayerDirection getPlayerDirection() {
+        return playerDirection;
+    }
+
+    public void setPlayerDirection(Enumerables.PlayerDirection playerDirection) {
+        this.playerDirection = playerDirection;
     }
 
 }

@@ -70,18 +70,22 @@ public class InputHandler implements InputProcessor {
 
         if(Gdx.input.isKeyPressed(Input.Keys.D)) {
             playerClass.setPlayerState(Enumerables.PlayerState.RUNNING);
+            playerClass.setPlayerDirection(Enumerables.PlayerDirection.RIGHT);
             player.setX(player.getX() + Constants.PLAYERSPEED);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A)) {
             playerClass.setPlayerState(Enumerables.PlayerState.RUNNING);
+            playerClass.setPlayerDirection(Enumerables.PlayerDirection.LEFT);
             player.setX(player.getX() - Constants.PLAYERSPEED);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.W)) {
             playerClass.setPlayerState(Enumerables.PlayerState.RUNNING);
+            playerClass.setPlayerDirection(Enumerables.PlayerDirection.UP);
             player.setY(player.getY() + Constants.PLAYERSPEED);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S)) {
             playerClass.setPlayerState(Enumerables.PlayerState.RUNNING);
+            playerClass.setPlayerDirection(Enumerables.PlayerDirection.DOWN);
             player.setY(player.getY() - Constants.PLAYERSPEED);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
