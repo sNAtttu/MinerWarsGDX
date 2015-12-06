@@ -88,6 +88,9 @@ public class InputHandler implements InputProcessor {
             playerClass.setPlayerDirection(Enumerables.PlayerDirection.DOWN);
             player.setY(player.getY() - Constants.PLAYERSPEED);
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            playerClass.Mine();
+        }
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
             Gdx.app.exit();
         }

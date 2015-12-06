@@ -20,8 +20,10 @@ public class Player {
     private Sprite playerSprite;
     private int positionX;
     private int positionY;
+    private GameWorld world;
 
     public Player(String name, GameWorld world) {
+        this.world = world;
         this.playerState = Enumerables.PlayerState.IDLE;
         this.playerDirection = Enumerables.PlayerDirection.RIGHT;
         this.name = name;
@@ -75,4 +77,7 @@ public class Player {
         this.playerDirection = playerDirection;
     }
 
+    public void Mine() {
+
+    }
 }

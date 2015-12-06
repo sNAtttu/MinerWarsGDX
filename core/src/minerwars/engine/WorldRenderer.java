@@ -27,8 +27,9 @@ public class WorldRenderer {
     private SpriteBatch batch;
     private Player playerClass;
     private TextureRegion playerIdleCurrentFrame;
-    private TextureRegion playerRunningCurrentFrame;
+    private TextureRegion playerRunningRightCurrentFrame;
     private float stateTime;
+    private boolean flip = false;
 
     public WorldRenderer(GameWorld world){
         animator = new Animator();
@@ -52,25 +53,22 @@ public class WorldRenderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stateTime += Gdx.graphics.getDeltaTime();
         playerIdleCurrentFrame = idleAnimation.getKeyFrame(stateTime, true);
-        playerRunningCurrentFrame = runningAnimation.getKeyFrame(stateTime, true);
+        playerRunningRightCurrentFrame = runningAnimation.getKeyFrame(stateTime, true);
         myWorld.getTiledMapRenderer().setView(cam);
         myWorld.getTiledMapRenderer().render();
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
 
         if(playerClass.getPlayerState() == Enumerables.PlayerState.RUNNING){
-            batch.draw(playerRunningCurrentFrame,
-                    playerClass.getPlayerSprite().getX(),
-                    playerClass.getPlayerSprite().getY(),
-                    playerClass.getPlayerSprite().getWidth(),
-                    playerClass.getPlayerSprite().getHeight());
+            CheckPlayerDirection();
         }
         else if (playerClass.getPlayerState() == Enumerables.PlayerState.IDLE){
             batch.draw(playerIdleCurrentFrame,
                     playerClass.getPlayerSprite().getX(),
                     playerClass.getPlayerSprite().getY(),
                     playerClass.getPlayerSprite().getWidth(),
-                    playerClass.getPlayerSprite().getHeight());
+                    playerClass.getPlayerSprite().getHeight()
+                    );
         }
         else {
             Gdx.app.log("RENDER","PLAYER HAS NOT STATE");
@@ -79,5 +77,63 @@ public class WorldRenderer {
         batch.end();
         InputHandler.checkInput(playerClass, cam);
 
+    }
+    private void CheckPlayerDirection(){
+
+        if(playerClass.getPlayerDirection() == Enumerables.PlayerDirection.DOWN){
+            batch.draw(playerRunningRightCurrentFrame,
+                    playerClass.getPlayerSprite().getX(),
+                    playerClass.getPlayerSprite().getY(),
+                    playerClass.getPlayerSprite().getWidth()/2,
+                    playerClass.getPlayerSprite().getHeight()/2,
+                    flip ? -playerClass.getPlayerSprite().getWidth() : playerClass.getPlayerSprite().getWidth(),
+                    playerClass.getPlayerSprite().getHeight(),
+                    1,
+                    1,
+                    flip ? 90 : 270
+            );
+        }
+        else if(playerClass.getPlayerDirection() == Enumerables.PlayerDirection.UP){
+            batch.draw(playerRunningRightCurrentFrame,
+                    playerClass.getPlayerSprite().getX(),
+                    playerClass.getPlayerSprite().getY(),
+                    playerClass.getPlayerSprite().getWidth()/2,
+                    playerClass.getPlayerSprite().getHeight()/2,
+                    flip ? -playerClass.getPlayerSprite().getWidth() : playerClass.getPlayerSprite().getWidth(),
+                    playerClass.getPlayerSprite().getHeight(),
+                    1,
+                    1,
+                    flip ? 270 : 90
+            );
+        }
+        else if(playerClass.getPlayerDirection() == Enumerables.PlayerDirection.LEFT){
+            flip = true;
+            batch.draw(playerRunningRightCurrentFrame,
+                    playerClass.getPlayerSprite().getX(),
+                    playerClass.getPlayerSprite().getY(),
+                    playerClass.getPlayerSprite().getWidth()/2,
+                    playerClass.getPlayerSprite().getHeight()/2,
+                    flip ? -playerClass.getPlayerSprite().getWidth() : playerClass.getPlayerSprite().getWidth(),
+                    playerClass.getPlayerSprite().getHeight(),
+                    1,
+                    1,
+                    0
+
+            );
+        }
+        else if(playerClass.getPlayerDirection() == Enumerables.PlayerDirection.RIGHT){
+            flip = false;
+            batch.draw(playerRunningRightCurrentFrame,
+                    playerClass.getPlayerSprite().getX(),
+                    playerClass.getPlayerSprite().getY(),
+                    playerClass.getPlayerSprite().getWidth()/2,
+                    playerClass.getPlayerSprite().getHeight()/2,
+                    flip ? -playerClass.getPlayerSprite().getWidth() : playerClass.getPlayerSprite().getWidth(),
+                    playerClass.getPlayerSprite().getHeight(),
+                    1,
+                    1,
+                    0
+            );
+        }
     }
 }
